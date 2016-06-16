@@ -32,6 +32,20 @@ class Competition_model extends CI_Model {
             return true;
         }
     }
+    
+    function getLocationAndDateExistsExceptID($location, $date, $id){
+        $this->db->where('Location', $location);
+        $this->db->where('Date', $date);
+        $this->db->where_not_in('ID', $id);
+        $query = $this->db->get('competition');
+        $count = $query->num_rows(); //counting result from query
+        
+        if($count==0){
+            return false;
+        } else {
+            return true;
+        }
+    }
 
     // create competition
     function insert($competition) {

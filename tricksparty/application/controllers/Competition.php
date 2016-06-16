@@ -121,10 +121,20 @@ class Competition extends CI_Controller {
         $location = $this->input->post('location');
         $date = $this->input->post('date');
 
-        if ($this->Competition_model->getLocationAndDateExists($location, $date) || $this->Ranking_model->getLocationAndDateExists($location, $date)) {
-            return false;
+        $competition = $this->Competition_model->get($this->input->post('ID'));
+
+        if ($competition != null) {
+            if ($this->Competition_model->getLocationAndDateExistsExceptID($location, $date, $competition->ID) || $this->Ranking_model->getLocationAndDateExists($location, $date)) {
+                return false;
+            } else {
+                return true;
+            }
         } else {
-            return true;
+            if ($this->Competition_model->getLocationAndDateExists($location, $date) || $this->Ranking_model->getLocationAndDateExists($location, $date)) {
+                return false;
+            } else {
+                return true;
+            }
         }
     }
 

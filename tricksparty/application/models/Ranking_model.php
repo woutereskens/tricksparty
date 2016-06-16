@@ -25,7 +25,7 @@ class Ranking_model extends CI_Model {
         $this->db->select('Location, Date, NumberOfJudges');
         $this->db->distinct();
         
-        $this->db->order_by("Date", "ASC");
+        $this->db->order_by("Date", "DESC");
         $query = $this->db->get('ranking');
         return $query->result();
     }
@@ -40,10 +40,9 @@ class Ranking_model extends CI_Model {
     
     // all rankings by location and date
     function getDistinctByLocationAndDate($location, $date) {
-        $this->db->distinct();
-        $this->db->select('Location, Date');
         $this->db->where('Location', $location);
         $this->db->where('Date', $date);
+        $this->db->limit(1);
         $query = $this->db->get('ranking');
         return $query->row();
     }

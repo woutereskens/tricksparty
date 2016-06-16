@@ -202,6 +202,9 @@ class Score extends CI_Controller {
             $data['active'] = 'Competitions';
             $data['current'] = $data['title'] = $this->lang->line("ranking");
 
+            $location = urldecode($location);
+            $date = urldecode($date);
+            
             $competition = $this->Ranking_model->getDistinctByLocationAndDate($location, $date);
 
             $rankings = $this->calculateScoreForRanking($location, $date);

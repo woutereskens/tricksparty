@@ -40,7 +40,9 @@
 <input type="hidden" name="last_name" value="<?php echo $person->LastName ;?>"/>
 <div class="form-group">
     <div class="col-sm-offset-2 col-sm-10">
-        <input type="submit" value="<?php echo $this->lang->line("submit"); ?>" class="btn btn-default"/>
+        <button type="submit" class="btn btn-primary">
+            <?php echo $this->lang->line("submit"); ?>
+        </button>
         <?php echo anchor('Competition/viewCompetitions', $this->lang->line("cancel"), ' class="btn btn-default"'); ?>
     </div>
 </div>

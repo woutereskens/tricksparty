@@ -44,7 +44,7 @@
                 echo "style='display:none;'";
             } ?>>
     <div class="page-header">
-        <h3><?php echo $this->lang->line("pilot_details"); ?></h3>
+        <h3><?php echo $this->lang->line("personal_details"); ?></h3>
     </div>
     <div class="form-group">
         <label for="first_name" class="col-sm-2 control-label"><?php echo $this->lang->line("first_name"); ?>*</label>

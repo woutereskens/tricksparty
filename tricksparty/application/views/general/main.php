@@ -26,10 +26,10 @@
 
         <!-- Select2 CSS -->
         <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>css/select2.min.css">
-        
+
         <!-- Morris CSS -->
         <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>css/morris.css">
-        
+
         <!-- Main CSS -->
         <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>css/style.css">
 
@@ -63,15 +63,21 @@
                             <i class="fa fa-user fa-fw"></i> <?php echo ucfirst($this->session->userdata('logged_in')['Username']); ?> <i class="fa fa-caret-down"></i>
                         </a>
                         <ul class="dropdown-menu dropdown-user">
-                            <li>
-                                <?php echo anchor('Login/viewChangePassword', '<i class="fa fa-lock fa-fw"></i> ' . $this->lang->line("change_password")); ?>
-                            </li>
-                            <?php if ($this->session->userdata('logged_in')['Permission'] == "Pilot") { ?>
+                            <?php if ($this->session->userdata('logged_in')['Permission'] == "Pilot" || $this->session->userdata('logged_in')['Permission'] == "Admin") { ?>
+                                <li>
+                                    <?php echo anchor('Login/viewChangePassword', '<i class="fa fa-lock fa-fw"></i> ' . $this->lang->line("change_password")); ?>
+                                </li>
+                                <?php
+                                echo $this->session->userdata('logged_in')['Permission'] == "Admin" ? '<li class="divider"></li>' : '';
+                            }
+                            if ($this->session->userdata('logged_in')['Permission'] == "Pilot") {
+                                ?>
                                 <li>
                                     <?php echo anchor('Person/viewCreateEditPersonalDetailsAsPilot', '<i class="fa fa-user fa-fw"></i> ' . $this->lang->line("edit_personal_details")); ?>
                                 </li>
+                                <li class="divider"></li>
                             <?php } ?>
-                            <li class="divider"></li>
+
                             <li><?php echo anchor('Login/logout', '<i class="fa fa-sign-out fa-fw"></i> ' . $this->lang->line("logout")); ?></li>
                         </ul>
                         <!-- /.dropdown-user -->
@@ -83,15 +89,21 @@
                 <div class="navbar-default sidebar" role="navigation">
                     <div class="sidebar-nav navbar-collapse">
                         <ul class="nav" id="side-menu">
-                            <li <?php if ($active == 'Competitions') echo 'class=active'; ?>>
-                                <?php echo anchor('Competition/viewCompetitions', '<i class="fa fa-trophy fa-fw"></i> ' . $this->lang->line("competitions")); ?>
+                            <li>
+                                <?php
+                                echo anchor('Competition/viewCompetitions', '<i class="fa fa-trophy fa-fw"></i> ' . $this->lang->line("competitions"), $active == 'Competitions' ? 'class="active"' : '');
+                                ?>
                             </li>
-                            <li <?php if ($active == 'Tricks') echo 'class=active'; ?>>
-                                <?php echo anchor('Trick/viewTricks', '<i class="fa fa-magic fa-fw"></i> ' . $this->lang->line("tricks")); ?>
+                            <li>
+                                <?php
+                                echo anchor('Trick/viewTricks', '<i class="fa fa-magic fa-fw"></i> ' . $this->lang->line("tricks"), $active == 'Tricks' ? 'class="active"' : '');
+                                ?>
                             </li>
                             <?php if ($this->session->userdata('logged_in')['Permission'] == "Admin") { ?>
-                                <li <?php if ($active == 'Logins') echo 'class=active'; ?>>
-                                    <?php echo anchor('Login/viewLogins', '<i class="fa fa-users fa-fw"></i> ' . $this->lang->line("logins")); ?>
+                                <li>
+                                    <?php
+                                    echo anchor('Login/viewLogins', '<i class="fa fa-users fa-fw"></i> ' . $this->lang->line("logins"), $active == 'Logins' ? 'class="active"' : '');
+                                    ?>
                                 </li>
                             <?php } ?>
                         </ul>

@@ -71,7 +71,7 @@ class Login extends CI_Controller {
 
     // all - view change password (page)
     function viewChangePassword() {
-        if ($this->session->userdata('logged_in')) {
+        if ($this->session->userdata('logged_in') && ($this->session->userdata('logged_in')['Permission'] == "Admin" || $this->session->userdata('logged_in')['Permission'] == "Pilot")) {
             $data['current'] = $data['title'] = $data['active'] = $this->lang->line("change_password");
 
             $partials = array('content' => 'login/change_password');
@@ -83,7 +83,7 @@ class Login extends CI_Controller {
 
     // all - change password (db)
     function changePassword() {
-        if ($this->session->userdata('logged_in')) {
+        if ($this->session->userdata('logged_in') && ($this->session->userdata('logged_in')['Permission'] == "Admin" || $this->session->userdata('logged_in')['Permission'] == "Pilot")) {
             $this->form_validation->set_rules('current_password', 'lang:current_password', 'trim|required|callback_checkPasswordMatch');
             $this->form_validation->set_rules('new_password', 'lang:new_password', 'trim|required|matches[password_confirm]');
             $this->form_validation->set_rules('password_confirm', 'lang:password_confirm', 'trim|required');
@@ -108,7 +108,7 @@ class Login extends CI_Controller {
     // check password match (local)
     function checkPasswordMatch() {
         $login = $this->Login_model->get($this->session->userdata('logged_in')['Username']);
-        
+
         if ($this->bcrypt->check_password($this->input->post('current_password'), $login->Password)) {
             return true;
         } else {

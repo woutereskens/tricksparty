@@ -25,7 +25,7 @@
     </div>
 </div>
 <div class="form-group row">
-    <label for="number_of_judges" class="col-lg-2 control-label"><?php echo $this->lang->line("number_of_judges"); ?></label>
+    <label for="number_of_judges" class="col-lg-2 control-label"><?php echo $this->lang->line("number_of_judges"); ?>*</label>
     <div class="col-lg-10">
         <select class="form-control" id="numberofjudges" name="number_of_judges">
             <?php

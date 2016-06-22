@@ -41,13 +41,18 @@ class Login extends CI_Controller {
 
         $login = $this->Login_model->get($username);
 
-        if ($this->bcrypt->check_password($this->input->post('password'), $login->Password)) {
-            $sess_array = array(
-                'Username' => $login->Username,
-                'Permission' => $login->Permission
-            );
-            $this->session->set_userdata('logged_in', $sess_array);
-            return TRUE;
+        if ($login != null) {
+            if ($this->bcrypt->check_password($this->input->post('password'), $login->Password)) {
+                $sess_array = array(
+                    'Username' => $login->Username,
+                    'Permission' => $login->Permission
+                );
+                $this->session->set_userdata('logged_in', $sess_array);
+                return TRUE;
+            } else {
+                $this->form_validation->set_message('check_database', $this->lang->line("wrong_username_or_password"));
+                return false;
+            }
         } else {
             $this->form_validation->set_message('check_database', $this->lang->line("wrong_username_or_password"));
             return false;
